@@ -101,12 +101,90 @@ void printMenu(){
 
 }
 
-void navEdit(){
-
+int navEdit(){
     int val = 0;
+    int idEdit = 0;
+
+    if(idEdit == 0){
+
+        std::cout<<"Qual o id da tarefa que deseja editar?\n";
+        std::cin>> idEdit;
+
+        while (idEdit != 0 && idEdit > taskcurrent)
+        {
+            std::cout<<"id invalido digite um id valido?\n";
+            std::cin>> idEdit;
+        }
+
+        while(val == 0){
+            int campEdit;
+            std::cout<<"Qual o campo da tarefa que deseja editar?\n";
+            std::cout<<"1 = titulo\n";
+            std::cout<<"2 = descrição\n";
+            std::cout<<"3 = data\n";
+            std::cout<<"4 = status\n";
+            std::cin>> campEdit;
+            int i = 0;
+            std::string edita;
+            int editaStatus;
+            while ( i != 1)
+            {
+                switch (campEdit)
+            {
+            case 1:
+                std::cout<<"Digite o novo titulo!\n";
+                std::cin>> edita;
+                taskTlite[idEdit] = edita;
+                break;
+            case 2:
+                std::cout<<"Digite a nova descrição!\n";
+                std::cin>> edita;
+                taskDescription[idEdit] = edita;
+                break;
+            case 3:
+                std::cout<<"Digite a nova data!\n";
+                std::cin>> edita;
+                taskDate[idEdit] = edita;
+                break;
+            case 4:
+                std::cout<<"Digite o ?\n";
+                std::cin>> edita;
+                taskTlite[idEdit] = edita;
+                break;
+            
+            default:
+                break;
+            }
+                
+            }
+            
+
+            
+
+
+
+
+        }
+        
+
+
+
+
+
+
+        
+
+        if{
+
+        }
+
+    }
 
     while(val != 1)
     {
+        
+
+        if 
 
     
 
@@ -130,10 +208,7 @@ void  editTask(){
     }
     
 
-    void menuEdit(){
-        std::cout<<"Qual o id da tarefa que deseja editar?\n";
-        optionsEdit();
-    }
+    
 
 
 
