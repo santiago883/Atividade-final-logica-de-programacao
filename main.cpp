@@ -1,6 +1,7 @@
 #include <iostream>
 #include <string>
     int taskcurrent = 1;
+    std::string taskId[100];
     std::string taskTlite[100];
     std::string taskDescription[100];
     std::string taskDate[100];
@@ -20,10 +21,7 @@ std::string DefineStatus(int NumberId){
     }
 
     return status;
-
 }
-
-
 
 void addTask(){
     std::string title;
@@ -44,11 +42,11 @@ void addTask(){
     if (taskcurrent >= 100){
         std::cout << "numero maximo de tarefaz utrapasado" << std::endl; 
     } else{
-
-        taskTlite[taskcurrent-1] = title;
-        taskDescription[taskcurrent-1]= description;
-        taskDate[taskcurrent-1] = date;
-        taskStatus[taskcurrent-1] = status;
+        taskId[taskcurrent] = taskcurrent;
+        taskTlite[taskcurrent] = title;
+        taskDescription[taskcurrent]= description;
+        taskDate[taskcurrent] = date;
+        taskStatus[taskcurrent] = status;
         taskcurrent++;
 
         std::cout << "tarefa declarada" << std::endl;
@@ -66,16 +64,11 @@ void seeTasks(){
     if(taskcurrent != 1){
         std::cout <<"\n";
         std::cout <<"\n";
-
-        
-        
         for (int i = 0; i != taskcurrent-1; i++){
             std::cout << "entrou for";
             std::cout << "Titulo: "<< taskTlite[i] << " // " << "Descrição: " << taskDescription[i]<< " // " <<"Data: "<<  taskDate[i] << " // " <<"Status: "<< DefineStatus(taskStatus[i]) << std::endl;
             std::cout << ":::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::" << std::endl;
-        }
-        
-
+        }       
     }
 
     std::string enter = "n";
@@ -108,6 +101,43 @@ void printMenu(){
 
 }
 
+void navEdit(){
+
+    int val = 0;
+
+    while(val != 1)
+    {
+
+    
+
+        std::cout<<"Qual o campo da tarefa que deseja editar?\n";
+        std::cout<<"1 = titulo\n";
+        std::cout<<"2 = descrição\n";
+        std::cout<<"3 = data\n";
+        std::cout<<"4 = status\n";
+    }
+
+
+
+void  editTask(){
+    int taskEdit;
+    void optionsEdit(){
+        std::cout<<"Qual o campo da tarefa que deseja editar?\n";
+        std::cout<<"1 = titulo\n";
+        std::cout<<"2 = descrição\n";
+        std::cout<<"3 = data\n";
+        std::cout<<"4 = status\n";
+    }
+    
+
+    void menuEdit(){
+        std::cout<<"Qual o id da tarefa que deseja editar?\n";
+        optionsEdit();
+    }
+
+
+
+}
 
 
 int main(){
