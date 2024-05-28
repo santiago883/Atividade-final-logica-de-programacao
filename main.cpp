@@ -22,6 +22,14 @@ std::string DefineStatus(int NumberId){
 
     return status;
 }
+void tarefaUm(){
+        taskId[taskcurrent] = taskcurrent;
+        taskTlite[taskcurrent] = "dormir";
+        taskDescription[taskcurrent]= "dormir cedo";
+        taskDate[taskcurrent] = "22";
+        taskStatus[taskcurrent] = 1;
+        taskcurrent++;
+}
 
 void addTask(){
     std::string title;
@@ -64,8 +72,7 @@ void seeTasks(){
     if(taskcurrent != 1){
         std::cout <<"\n";
         std::cout <<"\n";
-        for (int i = 0; i != taskcurrent-1; i++){
-            std::cout << "entrou for";
+        for (int i = 1 ; i != taskcurrent; i++){
             std::cout << "Titulo: "<< taskTlite[i] << " // " << "Descrição: " << taskDescription[i]<< " // " <<"Data: "<<  taskDate[i] << " // " <<"Status: "<< DefineStatus(taskStatus[i]) << std::endl;
             std::cout << ":::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::" << std::endl;
         }       
@@ -101,11 +108,14 @@ void printMenu(){
 
 }
 
-int navEdit(){
+
+
+void editTask(){
     int val = 0;
     int idEdit = 0;
+    int m = 0;
 
-    if(idEdit == 0){
+    while( m == 0){
 
         std::cout<<"Qual o id da tarefa que deseja editar?\n";
         std::cin>> idEdit;
@@ -116,8 +126,10 @@ int navEdit(){
             std::cin>> idEdit;
         }
 
+        int n = 0;
+
         while(val == 0){
-            int campEdit;
+            int campEdit = 0;
             std::cout<<"Qual o campo da tarefa que deseja editar?\n";
             std::cout<<"1 = titulo\n";
             std::cout<<"2 = descrição\n";
@@ -127,95 +139,88 @@ int navEdit(){
             int i = 0;
             std::string edita;
             int editaStatus;
-            while ( i != 1)
-            {
-                switch (campEdit)
-            {
-            case 1:
-                std::cout<<"Digite o novo titulo!\n";
-                std::cin>> edita;
-                taskTlite[idEdit] = edita;
-                break;
-            case 2:
-                std::cout<<"Digite a nova descrição!\n";
-                std::cin>> edita;
-                taskDescription[idEdit] = edita;
-                break;
-            case 3:
-                std::cout<<"Digite a nova data!\n";
-                std::cin>> edita;
-                taskDate[idEdit] = edita;
-                break;
-            case 4:
-                std::cout<<"Digite o ?\n";
-                std::cin>> edita;
-                taskTlite[idEdit] = edita;
-                break;
-            
-            default:
-                break;
-            }
+    
+            switch (campEdit){
+                case 1:
+                    std::cout<<"Digite o novo titulo!\n";
+                    std::cin>> edita;
+                    taskTlite[idEdit] = edita;
+                    break;
+                case 2:
+                    std::cout<<"Digite a nova descrição!\n";
+                    std::cin>> edita;
+                    taskDescription[idEdit] = edita;
+                    break;
+                case 3:
+                    std::cout<<"Digite a nova data!\n";
+                    std::cin>> edita;
+                    taskDate[idEdit] = edita;
+                    break;
+                case 4:
+                    std::cout<<"Digite o ?\n";
+                    std::cin>> edita;
+                    taskTlite[idEdit] = edita;
+                    break;
                 
+                default:
+                    break;
             }
-            
 
-            
+            char res;
+
+            std::cout<<"Deseja editar outro campo? s/n\n";
+            std::cin>> res;
+
+            int na = 0;
+
+            while( na == 0){
+            if(res == 'n' || res == 'N'){
+                val = 1;
+                na = 1;
+            }else if(res == 's' || res == 'S'){
+                na = 1;
+            }else if(res != 'n' || res != 'N'){
+                std::cout<<"digite s ou n\n";
+                std::cin>> res;
+            }
+        }
 
 
+                
+        
+        }
 
+        char res;
 
+        std::cout<<"Deseja editar outra tarefa? s/n\n";
+        std::cin>> res;
+        int no = 0;
+
+        while(no == 0){
+            if(res == 'n' || res == 'N'){
+                m = 1;
+                no++;
+            }else if(res == 's' || res == 'S'){
+                no++;
+            }else if(res != 'n' || res != 'N'){
+                std::cout<<"digite s ou n\n";
+                std::cin>> res;
+            }
         }
         
 
 
 
-
-
-
-        
-
-        if{
-
-        }
-
     }
 
-    while(val != 1)
-    {
-        
-
-        if 
-
     
-
-        std::cout<<"Qual o campo da tarefa que deseja editar?\n";
-        std::cout<<"1 = titulo\n";
-        std::cout<<"2 = descrição\n";
-        std::cout<<"3 = data\n";
-        std::cout<<"4 = status\n";
-    }
-
-
-
-void  editTask(){
-    int taskEdit;
-    void optionsEdit(){
-        std::cout<<"Qual o campo da tarefa que deseja editar?\n";
-        std::cout<<"1 = titulo\n";
-        std::cout<<"2 = descrição\n";
-        std::cout<<"3 = data\n";
-        std::cout<<"4 = status\n";
-    }
-    
-
-    
-
-
-
 }
 
 
+
+
 int main(){
+    tarefaUm();
     int i = 0;
     
     while (i == 0)
@@ -230,6 +235,10 @@ int main(){
 
         if(acao == 2 ){
             seeTasks();
+        }
+
+        if(acao == 3 ){
+            editTask();
         }
 
         if(acao == 0){
