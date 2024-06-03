@@ -1,7 +1,9 @@
 #include <iostream>
 #include <string>
+#include <cstring>
+
     int taskcurrent = 1;
-    std::string taskId[100];
+    int taskId[100];
     std::string taskTlite[100];
     std::string taskDescription[100];
     std::string taskDate[100];
@@ -72,10 +74,18 @@ void seeTasks(){
     if(taskcurrent != 1){
         std::cout <<"\n";
         std::cout <<"\n";
+        int a;
         for (int i = 1 ; i != taskcurrent; i++){
-            std::cout << "Titulo: "<< taskTlite[i] << " // " << "Descrição: " << taskDescription[i]<< " // " <<"Data: "<<  taskDate[i] << " // " <<"Status: "<< DefineStatus(taskStatus[i]) << std::endl;
+            if(taskId[i] != 0){
+            std::cout<< "Id: "<< taskId[i] << " // " << "Titulo: "<< taskTlite[i] << " // " << "Descrição: " << taskDescription[i]<< " // " <<"Data: "<<  taskDate[i] << " // " <<"Status: "<< DefineStatus(taskStatus[i]) << std::endl;
             std::cout << ":::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::" << std::endl;
+            }else{
+                a++;
+            }
+
+            
         }       
+         std::cout << "Existem " << a << " tarefas que foram apagadas"<< std::endl;
     }
 
     std::string enter = "n";
@@ -93,8 +103,6 @@ void seeTasks(){
 
 
 
-
-
 void printMenu(){
     std::cout<<"Sistema de Gerenciamento de Tarefas \n";
     std::cout<<"1. Adicionar Tarefa \n";
@@ -103,6 +111,8 @@ void printMenu(){
     std::cout<<"4. Remover Tarefa \n";
     std::cout<<"5. Buscar Tarefa \n";
     std::cout<<"6. Filtrar Tarefas por Status \n";
+    std::cout<<"7. Visualizar Tarefas excluidas \n";
+    std::cout<<"8. ctrl z excluido \n";
     std::cout<<"0. Sair \n";
     std::cout<<"Escolha uma opção:\n"; 
 
@@ -143,23 +153,35 @@ void editTask(){
             switch (campEdit){
                 case 1:
                     std::cout<<"Digite o novo titulo!\n";
-                    std::cin>> edita;
+                    std::getline(std::cin, edita);
+                    while(std::getline(std::cin, edita))
+                    if(edita != ""){
+                        break;
+                    }
+
                     taskTlite[idEdit] = edita;
                     break;
                 case 2:
                     std::cout<<"Digite a nova descrição!\n";
-                    std::cin>> edita;
+                    std::getline(std::cin, edita);
+                    while(std::getline(std::cin, edita))
+                    if(edita != ""){
+                        break;
+                    }
+
                     taskDescription[idEdit] = edita;
                     break;
                 case 3:
                     std::cout<<"Digite a nova data!\n";
                     std::cin>> edita;
+
                     taskDate[idEdit] = edita;
                     break;
                 case 4:
-                    std::cout<<"Digite o ?\n";
-                    std::cin>> edita;
-                    taskTlite[idEdit] = edita;
+                    int num;
+                    std::cout<<"Digite o novo status sendo 1 para Pendente, 2 para Em Progresso e 3 para Concluída?\n";  
+                    std::cin>> num;
+                    taskStatus[idEdit] = num;
                     break;
                 
                 default:
@@ -216,11 +238,169 @@ void editTask(){
     
 }
 
+void removeTask(){
+    std::cout<<"entrou";
+    int val = 0;
+
+    while(val != 1){
+        int taskremove;
+        std::cout<<"qual o id da tarefa que deseja deleta?";
+        std::cin>>taskremove;
+
+        if(taskremove != 0 || taskremove <  taskcurrent){
+            taskId[taskremove] = 0;
+        
+        }
+        val = 1;
+        
+    }
+}
+
+
+
+void searchtitle(){
+    std::string buscar;
+    int m = 1;
+    std::cout << "Digite o titulo da tarefa que deseja buscar! \n";
+    std::cin >> buscar;
+
+    while (m != taskcurrent){
+        std::string compara = taskTlite[m];
+        int com = compara.size();
+        int bus = buscar.size();
+        const int len = compara.length();
+
+        char comparar[len + 1];
+
+        for (int i = 0; i <= len; i++)
+        {
+            comparar[i] = compara[i];
+        }
+
+        const int len2 = buscar.length();
+
+        char buscarr[len2 + 1];
+
+        for (int i = 0; i <= len; i++)
+        {
+            buscarr[i] = buscar[i];
+        }
+
+
+        if (strncmp(comparar, buscarr,bus) == 0){
+            if(taskId[m] == 0){
+                std::cout<< "Id: "<< taskId[m] << " // " << "Titulo: "<< taskTlite[m] << " // " << "Descrição: " << taskDescription[m]<< " // " <<"Data: "<<  taskDate[m] << " // " <<"Status: "<< DefineStatus(taskStatus[m]) << std::endl;
+                std::cout<< "Tarefa Deletada";
+                std::cout << ":::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::" << std::endl;
+            }else{
+                std::cout<< "Id: "<< taskId[m] << " // " << "Titulo: "<< taskTlite[m] << " // " << "Descrição: " << taskDescription[m]<< " // " <<"Data: "<<  taskDate[m] << " // " <<"Status: "<< DefineStatus(taskStatus[m]) << std::endl;
+            std::cout << ":::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::" << std::endl;
+
+            }
+        
+        }else{
+            std::cout<< "não foi encontrado nenhuma tarefa";
+        }
+        
+        m++;
+
+    }
+    
+}
+
+void filterStatus(){
+    int val = 0;
+    while (val != 1)
+    {
+        int statusf;
+        std::cout<<"Qual status a ser friltrado? \n";
+        std::cout<<"1: Pendente \n";
+        std::cout<<"2: Em Progresso \n";
+        std::cout<<"3: Concluída \n";
+        std::cout<<"4: voltar \n";
+        std::cin>> statusf;
+
+        if(statusf == 1){
+ 
+            std::cout <<"\n";
+            std::cout <<"\n";
+            for (int i = 1 ; i != taskcurrent; i++){
+                if(taskId[i] != 0 && taskStatus[i] == 1 ){
+                    std::cout<< "Id: "<< taskId[i] << " // " << "Titulo: "<< taskTlite[i] << " // " << "Descrição: " << taskDescription[i]<< " // " <<"Data: "<<  taskDate[i] << " // " <<"Status: "<< DefineStatus(taskStatus[i]) << std::endl;
+                    std::cout << ":::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::" << std::endl;
+                }
+            }
+            std::cout <<"\n";
+            std::cout <<"\n";
+        }else if(statusf == 2){
+            std::cout <<"\n";
+            std::cout <<"\n";
+            for (int i = 1 ; i != taskcurrent; i++){
+                if(taskStatus[i] == 2 && taskId[i] != 0){
+                    std::cout<< "Id: "<< taskId[i] << " // " << "Titulo: "<< taskTlite[i] << " // " << "Descrição: " << taskDescription[i]<< " // " <<"Data: "<<  taskDate[i] << " // " <<"Status: "<< DefineStatus(taskStatus[i]) << std::endl;
+                    std::cout << ":::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::" << std::endl;
+                }
+            }
+            std::cout <<"\n";
+            std::cout <<"\n";
+
+        }else if(statusf == 3 ){
+            std::cout <<"\n";
+            std::cout <<"\n";
+            for (int i = 1 ; i != taskcurrent; i++){
+                if(taskStatus[i] == 3 && taskId[i] != 0){
+                    std::cout<< "Id: "<< taskId[i] << " // " << "Titulo: "<< taskTlite[i] << " // " << "Descrição: " << taskDescription[i]<< " // " <<"Data: "<<  taskDate[i] << " // " <<"Status: "<< DefineStatus(taskStatus[i]) << std::endl;
+                    std::cout << ":::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::" << std::endl;
+                }
+            }
+            std::cout <<"\n";
+            std::cout <<"\n";
+            
+        }else if(statusf == 4){
+            val = 1;
+        }else{
+            std::cout <<"Porfavor digite um valor valido!";
+        }
+    }
+    
+}
+
+
+void filterDeletTasks(){
+    std::cout <<"\n";
+        std::cout <<"\n";
+        int a;
+        for (int i = 1 ; i != taskcurrent; i++){
+            if(taskId[i] == 0){
+                std::cout <<"\n";
+                std::cout <<"\n";
+                std::cout<< "Id: "<< i << " // " << "Titulo: "<< taskTlite[i] << " // " << "Descrição: " << taskDescription[i]<< " // " <<"Data: "<<  taskDate[i] << " // " <<"Status: "<< DefineStatus(taskStatus[i]) << std::endl;
+                std::cout << ":::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::" << std::endl;
+                std::cout <<"\n";
+                std::cout <<"\n";
+            }else{
+                a++;
+            }
+
+            
+        }
+}
+
+void anulDelete(){
+    int idex = 0;
+    std::cout <<"digite o id da tarefa exluida!";
+    std::cin >>  idex;
+
+    if(taskId[idex] == 0 && idex < taskcurrent){
+        taskId[idex] = idex;
+    }
+
+}
 
 
 
 int main(){
-    tarefaUm();
+    //tarefaUm();
     int i = 0;
     
     while (i == 0)
@@ -240,6 +420,27 @@ int main(){
         if(acao == 3 ){
             editTask();
         }
+
+        if(acao == 4 ){
+            removeTask();
+        }
+
+        if(acao == 5 ){
+            searchtitle();
+        }
+
+        if(acao == 6 ){
+            filterStatus();
+        }
+
+        if(acao == 7 ){
+            filterDeletTasks();
+        }
+
+        if(acao == 8 ){
+            anulDelete();
+        }
+
 
         if(acao == 0){
             i++;
